@@ -60,8 +60,8 @@ class InfiniteTicTacToe:
         # Track game state
         self.state: GameState = GameState.IN_PROGRESS
 
-    # We define several modifier and getter methods to interact with the elements of the class.
-       
+    # We define several modifier and getter methods to interact with the elements of the class. 
+      
     def get_board(self) -> List[List[str]]:
         """
         Get the current board state.

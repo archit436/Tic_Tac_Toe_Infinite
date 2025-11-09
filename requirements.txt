@@ -25,3 +25,26 @@ httpx>=0.25.0             # HTTP client for testing API calls
 black>=23.12.0            # Code formatter
 flake8>=6.1.0             # Linter for code quality
 mypy>=1.7.0               # Type checking
+
+# Core Web Framework
+fastapi>=0.104.1          # FastAPI framework for building REST API endpoints
+uvicorn[standard]>=0.24.0 # ASGI server to run FastAPI application
+
+# Game Logic & AI Dependencies
+numpy>=1.26.0             # Numerical operations for game state and RL computations
+stable-baselines3>=2.2.0  # RL library for training AI opponent (Q-Learning, PPO, etc.)
+gymnasium>=0.29.0         # Environment interface for RL training (replaces gym)
+
+# Data Handling & Persistence
+pydantic>=2.5.0           # Data validation for API request/response models
+python-dotenv>=1.0.0      # Load environment variables from .env file
+
+# Development & Testing
+pytest>=7.4.0             # Testing framework for unit tests
+pytest-asyncio>=0.21.0    # Async support for testing FastAPI endpoints
+httpx>=0.25.0             # HTTP client for testing API calls
+
+# Code Quality (optional but recommended)
+black>=23.12.0            # Code formatter
+flake8>=6.1.0             # Linter for code quality
+mypy>=1.7.0               # Type checking
