@@ -1,5 +1,5 @@
 """
-Infinite Tic Tac Toe - Core Game Logic
+Vanishing Tic Tac Toe - Core Game Logic
 ======================================
 This module implements the game logic for a modified Tic Tac Toe where:
 - Standard 3x3 grid
@@ -34,7 +34,7 @@ class GameState(Enum):
     DRAW = "draw"
 
 
-class InfiniteTicTacToe:
+class VanishingTicTacToe:
     """
     Main game class that manages the board state and game logic.
     """
@@ -301,9 +301,9 @@ if __name__ == "__main__":
     Simple test to demonstrate the game mechanics.
     Run this file directly to see the vanishing piece mechanic in action.
     """
-    game = InfiniteTicTacToe()
-    
-    print("=== Infinite Tic Tac Toe Demo ===")
+    game = VanishingTicTacToe()
+
+    print("=== Vanishing Tic Tac Toe Demo ===")
     print("Each player can only have 3 pieces on the board.")
     print("After the 3rd piece, the oldest piece vanishes.\n")
     

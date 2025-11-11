@@ -1,7 +1,7 @@
 """
-Infinite Tic Tac Toe - FastAPI Backend
+Vanishing Tic Tac Toe - FastAPI Backend
 ========================================
-This module provides REST API endpoints for the Infinite Tic Tac Toe game.
+This module provides REST API endpoints for the Vanishing Tic Tac Toe game.
 It manages game sessions and coordinates between the frontend and game logic.
 
 Endpoints:
@@ -21,7 +21,7 @@ import uuid
 import logging
 
 # Import the game logic we created earlier
-from game_logic import InfiniteTicTacToe, GameState, Player
+from game_logic import VanishingTicTacToe, GameState, Player
 
 
 # ============================================================================
@@ -94,8 +94,8 @@ class GameListResponse(BaseModel):
 # ============================================================================
 
 app = FastAPI(
-    title="Infinite Tic Tac Toe API",
-    description="REST API for the Infinite Tic Tac Toe game with vanishing piece mechanic",
+    title="Vanishing Tic Tac Toe API",
+    description="REST API for the Vanishing Tic Tac Toe game with vanishing piece mechanic",
     version="1.0.0"
 )
 
@@ -114,17 +114,17 @@ app.add_middleware(
 # GAME SESSION STORAGE
 # ============================================================================
 # In-memory storage of active game sessions
-# Key: game_id (string), Value: InfiniteTicTacToe instance
+# Key: game_id (string), Value: VanishingTicTacToe instance
 # NOTE: This data is lost when the server restarts.
 # For production, use a database (SQLite, PostgreSQL, etc.)
-games: Dict[str, InfiniteTicTacToe] = {}
+games: Dict[str, VanishingTicTacToe] = {}
 
 
 # ============================================================================
 # HELPER FUNCTIONS
 # ============================================================================
 
-def _build_game_response(game_id: str, game: InfiniteTicTacToe) -> GameResponse:
+def _build_game_response(game_id: str, game: VanishingTicTacToe) -> GameResponse:
     """
     Helper function to convert a game instance into a JSON-serializable GameResponse.
     
@@ -132,7 +132,7 @@ def _build_game_response(game_id: str, game: InfiniteTicTacToe) -> GameResponse:
     
     Args:
         game_id: The unique identifier for this game
-        game: The InfiniteTicTacToe game instance
+        game: The VanishingTicTacToe game instance
         
     Returns:
         GameResponse object ready to be serialized to JSON
@@ -172,7 +172,7 @@ async def health_check():
     Returns:
         JSON indicating server is healthy.
     """
-    return {"status": "healthy", "service": "Infinite Tic Tac Toe API"}
+    return {"status": "healthy", "service": "Vanishing Tic Tac Toe API"}
 
 
 @app.post("/game/new", response_model=GameResponse, tags=["Game Management"])
@@ -190,8 +190,8 @@ async def create_new_game():
     game_id = str(uuid.uuid4())
     
     # Create a new game instance
-    game = InfiniteTicTacToe()
-    
+    game = VanishingTicTacToe()
+
     # Store the game in our in-memory storage
     games[game_id] = game
     
