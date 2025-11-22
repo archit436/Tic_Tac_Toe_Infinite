@@ -140,3 +140,113 @@ Tic_Tac_Toe_Infinite/
 - **Always reference**: [Plan_Draft_6:11.md](Plan_Draft_6:11.md) for architecture decisions
 - **Comment philosophy**: Help future-you and non-experts understand the code
 - **Approach**: Understand user's goal, suggest alternatives, keep it simple
+
+---
+
+## Environment Management & Lessons Learned
+
+### Conda Environment Setup (CRITICAL)
+**Always use the `infinite-tictactoe` conda environment for this project.**
+
+This prevents dependency conflicts and ensures consistent package versions across development sessions.
+
+#### Starting the Backend Server - Correct Method
+```bash
+# Method 1: Single command (recommended)
+source ~/anaconda3/etc/profile.d/conda.sh && conda activate infinite-tictactoe && python -m uvicorn main:app --reload --port 8000
+
+# Method 2: Step by step
+source ~/anaconda3/etc/profile.d/conda.sh
+conda activate infinite-tictactoe
+cd backend
+python -m uvicorn main:app --reload --port 8000
+```
+
+**Key lessons:**
+1. The conda environment is named `infinite-tictactoe` (with hyphen, not spaces)
+2. Must source conda.sh before activating environment in non-interactive shells
+3. Run uvicorn from the backend directory or it won't find main.py
+4. The `--reload` flag enables auto-restart during development
+
+#### Starting the Frontend Server
+```bash
+# From project root
+npm start --prefix /Users/architbhargava/Documents/GitHub/Tic_Tac_Toe_Infinite/frontend
+
+# Or change directory first
+cd frontend
+npm start
+```
+
+**Key lessons:**
+1. Must use absolute path with `--prefix` when not in the frontend directory
+2. React dev server runs on port 3000 by default
+3. Will show deprecation warnings about webpack middleware (safe to ignore for now)
+
+### Verifying Servers are Running
+```bash
+# Check backend health
+curl http://localhost:8000/health
+
+# Expected response:
+# {"status":"healthy","service":"Vanishing Tic Tac Toe API"}
+
+# Test game creation
+curl -X POST http://localhost:8000/game/new
+
+# Frontend: Open http://localhost:3000 in browser
+```
+
+### Common Issues Fixed
+
+#### Issue 1: Duplicate Dependencies in requirements.txt
+**Problem**: Lines 1-28 and 29-51 in requirements.txt were identical duplicates
+**Solution**: Removed duplicate entries (lines 29-51)
+**Location**: [requirements.txt](../requirements.txt)
+
+#### Issue 2: Conda Environment Not Found
+**Problem**: Error "EnvironmentNameNotFound: Could not find conda environment: infinite tic tac toe"
+**Cause**: Environment name has hyphen, not spaces: `infinite-tictactoe`
+**Solution**: Use correct environment name or check with `conda env list`
+
+#### Issue 3: Module Not Found Errors
+**Problem**: `ModuleNotFoundError: No module named 'uvicorn'`
+**Cause**: Not running in the conda environment
+**Solution**: Always activate `infinite-tictactoe` environment before starting backend
+
+### Project Status After Testing
+
+**Backend Status**: ✅ Running successfully on http://127.0.0.1:8000
+- Health endpoint working
+- Game creation endpoint working
+- Auto-reload enabled for development
+- CORS configured for frontend requests
+
+**Frontend Status**: ✅ Running successfully on http://localhost:3000
+- Successfully compiles and serves
+- Can connect to backend API
+- Shows minor webpack deprecation warnings (safe to ignore)
+
+**Both servers tested and confirmed working together.**
+
+### Development Workflow Best Practices
+
+1. **Always start with conda environment activation**
+   - This is the #1 source of dependency issues
+   - Add to your shell startup script if needed
+
+2. **Start backend before frontend**
+   - Frontend needs backend to initialize game on mount
+   - Check backend health before debugging frontend issues
+
+3. **Use separate terminal windows**
+   - One for backend server
+   - One for frontend server
+   - One for running commands/tests
+
+4. **Check server output regularly**
+   - Backend logs show API calls and errors
+   - Frontend console shows React warnings/errors
+
+### Files Modified During Setup
+- [requirements.txt](../requirements.txt) - Removed duplicate dependencies
