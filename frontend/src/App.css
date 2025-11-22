@@ -1,0 +1,219 @@
+/**
+ * Main Application Styles - Dark Mode Edition
+ * ============================================
+ * 
+ * Global styles for the Vanishing Tic Tac Toe app.
+ * Dark purple theme with high contrast elements.
+ */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.App {
+  text-align: center;
+  background: linear-gradient(135deg, #1a0f2e 0%, #2d1b47 100%);
+  border-radius: 16px;
+  box-shadow: 
+    0 0 40px rgba(124, 77, 255, 0.6),
+    inset 0 0 40px rgba(124, 77, 255, 0.1),
+    0 20px 60px rgba(0, 0, 0, 0.9);
+  padding: 40px;
+  max-width: 700px;
+  margin: 20px;
+  border: 4px solid #7c4dff;
+}
+
+/* Header styles */
+.App-header {
+  margin-bottom: 30px;
+}
+
+.App-header h1 {
+  font-size: 3rem;
+  color: #e0e0e0;
+  margin-bottom: 10px;
+  text-shadow: 
+    0 0 20px rgba(124, 77, 255, 0.8),
+    0 0 40px rgba(124, 77, 255, 0.4);
+}
+
+.subtitle {
+  font-size: 1.1rem;
+  color: #b0b0b0;
+  font-style: italic;
+  text-shadow: 0 0 10px rgba(176, 176, 176, 0.5);
+}
+
+/* Error banner */
+.error-banner {
+  background: linear-gradient(135deg, #2d0a0f 0%, #4a0e1c 100%);
+  color: #ff4757;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 2px solid #ff4757;
+  border-left: 5px solid #ff4757;
+  font-weight: 600;
+  box-shadow: 0 0 20px rgba(255, 71, 87, 0.5);
+}
+
+/* Error message */
+.error-message {
+  background: linear-gradient(135deg, #2d0a0f 0%, #3d1015 100%);
+  color: #ff6b7a;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  border: 2px solid #ff4757;
+  box-shadow: 0 0 15px rgba(255, 71, 87, 0.4);
+}
+
+/* Game container */
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Control buttons */
+.controls {
+  margin-top: 30px;
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.btn {
+  /* Size */
+  padding: 15px 30px;
+  
+  /* Typography */
+  font-size: 1.1rem;
+  font-weight: 700;
+  
+  /* Appearance */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  
+  /* Transition */
+  transition: all 0.3s ease;
+  
+  /* Shadow for depth */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Reset button - red theme */
+.btn-reset {
+  background: linear-gradient(135deg, #ff4757 0%, #e84545 100%);
+  color: white;
+  border: 2px solid #ff6b7a;
+}
+
+.btn-reset:hover:not(:disabled) {
+  background: linear-gradient(135deg, #ff6b7a 0%, #ff4757 100%);
+  box-shadow: 
+    0 6px 20px rgba(0, 0, 0, 0.6),
+    0 0 25px rgba(255, 71, 87, 0.6);
+}
+
+/* New game button - cyan theme */
+.btn-new {
+  background: linear-gradient(135deg, #00d9ff 0%, #00b8d4 100%);
+  color: #0a0a0a;
+  border: 2px solid #00e5ff;
+}
+
+.btn-new:hover:not(:disabled) {
+  background: linear-gradient(135deg, #00e5ff 0%, #00d9ff 100%);
+  box-shadow: 
+    0 6px 20px rgba(0, 0, 0, 0.6),
+    0 0 25px rgba(0, 217, 255, 0.6);
+}
+
+/* Loading indicator */
+.loading {
+  margin-top: 20px;
+  font-size: 1.2rem;
+  color: #00d9ff;
+  font-weight: 700;
+  animation: pulse-loading 1.5s ease-in-out infinite;
+  text-shadow: 0 0 10px rgba(0, 217, 255, 0.8);
+}
+
+@keyframes pulse-loading {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Footer */
+.App-footer {
+  margin-top: 40px;
+  padding-top: 20px;
+  border-top: 2px solid rgba(124, 77, 255, 0.3);
+}
+
+.App-footer p {
+  font-size: 0.95rem;
+  color: #888;
+  font-style: italic;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+  .App {
+    margin: 10px;
+    padding: 25px 15px;
+  }
+
+  .App-header h1 {
+    font-size: 2.2rem;
+  }
+
+  .subtitle {
+    font-size: 0.95rem;
+  }
+
+  .controls {
+    flex-direction: column;
+    width: 100%;
+    gap: 15px;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 12px;
+  }
+}

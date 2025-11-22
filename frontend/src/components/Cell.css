@@ -1,0 +1,101 @@
+/**
+ * Cell Component Styles - Dark Mode Edition
+ * ==========================================
+ * 
+ * Dark theme with purple/blue accents and neon glow effects.
+ * High contrast for accessibility and modern aesthetic.
+ */
+
+.cell {
+  /* Cell dimensions - same as before */
+  width: 100px;
+  height: 100px;
+  /* Center content */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Typography - larger and bolder for dark mode */
+  font-size: 3rem;
+  font-weight: 900;
+  font-family: 'Arial Black', 'Arial Bold', sans-serif;
+  /* Dark background with purple border */
+  background-color: #1a1625;
+  border: 3px solid #6b4fc3;
+
+  /* Cursor style: Become a pointing hand on hover */
+  cursor: pointer;
+  
+  /* Smooth transitions for all state changes */
+  transition: all 0.3s ease;
+  
+  /* Add subtle inner shadow for depth */
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Hover effect for empty cells - glowing purple effect */
+.cell:hover {
+  background-color: #2a1f3d;
+  border-color: #8b6edf;
+  box-shadow: 
+    inset 0 0 10px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(107, 79, 195, 0.6);
+  transform: scale(1.05);
+}
+
+/* Disable hover effect for occupied cells */
+.cell[data-value="X"]:hover,
+.cell[data-value="O"]:hover {
+  cursor: default;
+  transform: none;
+  background-color: #1a1625;
+  border-color: #6b4fc3;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Highlight the oldest piece - warning glow effect */
+.cell.oldest {
+  background-color: #2d1a1f;
+  border-color: #ff4757;
+  animation: pulse-warning 1.5s infinite;
+  box-shadow: 
+    inset 0 0 10px rgba(0, 0, 0, 0.5),
+    0 0 25px rgba(255, 71, 87, 0.8);
+}
+
+/* Pulsing animation for oldest piece - warning effect */
+@keyframes pulse-warning {
+  0% {
+    box-shadow: 
+      inset 0 0 10px rgba(0, 0, 0, 0.5),
+      0 0 15px rgba(255, 71, 87, 0.9);
+    border-color: #ff4757;
+  }
+  50% {
+    box-shadow: 
+      inset 0 0 10px rgba(0, 0, 0, 0.5),
+      0 0 35px rgba(255, 71, 87, 0.6);
+    border-color: #ff6b7a;
+  }
+  100% {
+    box-shadow: 
+      inset 0 0 10px rgba(0, 0, 0, 0.5),
+      0 0 15px rgba(255, 71, 87, 0.9);
+    border-color: #ff4757;
+  }
+}
+
+/* Styling for X pieces - cyan/blue glow */
+.cell[data-value="X"] {
+  color: #00d9ff;
+  text-shadow: 
+    0 0 10px rgba(0, 217, 255, 0.8),
+    0 0 20px rgba(0, 217, 255, 0.4);
+}
+
+/* Styling for O pieces - hot pink/magenta glow */
+.cell[data-value="O"] {
+  color: #ff006e;
+  text-shadow: 
+    0 0 10px rgba(255, 0, 110, 0.8),
+    0 0 20px rgba(255, 0, 110, 0.4);
+}

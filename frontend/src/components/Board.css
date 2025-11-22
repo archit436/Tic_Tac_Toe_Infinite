@@ -1,0 +1,55 @@
+/**
+ * Board Component Styles - Dark Mode Edition
+ * ===========================================
+ * 
+ * Dark purple theme with glowing border effects.
+ * Creates the 3x3 grid layout for the game.
+ */
+
+.board {
+  /* Layout - inline-block so it only takes up as much space as needed */
+  display: inline-block;
+  
+  /* Spacing */
+  margin: 20px auto;
+  padding: 20px;
+  
+  /* Dark background with purple tint - gradient for depth */
+  background: linear-gradient(135deg, #1a0f2e 0%, #2d1b47 100%);
+  
+  /* Glowing border effect */
+  border: 4px solid #7c4dff;
+  
+  /* Multiple shadows for depth and glow */
+  box-shadow: 
+    0 0 30px rgba(124, 77, 255, 0.6),
+    inset 0 0 30px rgba(124, 77, 255, 0.1),
+    0 10px 40px rgba(0, 0, 0, 0.8);
+  
+  /* Rounded corners for modern look */
+  border-radius: 12px;
+}
+
+.board-row {
+  /* Arrange cells horizontally */
+  display: flex;
+  flex-direction: row;
+}
+
+/* Remove spacing between cells - creates seamless grid */
+.board-row:not(:last-child) .cell {
+  border-bottom: none;
+}
+
+.board-row .cell:not(:last-child) {
+  border-right: none;
+}
+
+/* Add subtle glow to the entire board on hover */
+.board:hover {
+  box-shadow: 
+    0 0 40px rgba(124, 77, 255, 0.8),
+    inset 0 0 30px rgba(124, 77, 255, 0.15),
+    0 10px 40px rgba(0, 0, 0, 0.8);
+  transition: box-shadow 0.3s ease;
+}

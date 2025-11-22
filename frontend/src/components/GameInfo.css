@@ -1,0 +1,207 @@
+/**
+ * GameInfo Component Styles - Dark Mode Edition
+ * ==============================================
+ * 
+ * Dark theme with glowing text effects and high contrast.
+ * Displays game status, player counts, and warnings.
+ */
+
+.game-info {
+  /* Layout */
+  margin: 20px auto;
+  max-width: 450px;
+  
+  /* Spacing */
+  padding: 25px;
+  
+  /* Dark background with purple gradient */
+  background: linear-gradient(135deg, #1a0f2e 0%, #251742 100%);
+  
+  /* Glowing border */
+  border: 3px solid #6b4fc3;
+  box-shadow: 
+    0 0 20px rgba(107, 79, 195, 0.5),
+    inset 0 0 20px rgba(107, 79, 195, 0.1),
+    0 5px 30px rgba(0, 0, 0, 0.7);
+  
+  /* Rounded corners */
+  border-radius: 12px;
+  
+  /* Typography */
+  font-family: 'Arial', 'Segoe UI', sans-serif;
+  color: #e0e0e0;
+}
+
+.status {
+  /* Typography */
+  font-size: 1.8rem;
+  font-weight: 800;
+  text-align: center;
+  
+  /* Spacing */
+  padding: 20px;
+  margin-bottom: 20px;
+  
+  /* Appearance */
+  border-radius: 8px;
+  
+  /* Smooth transitions */
+  transition: all 0.3s ease;
+}
+
+/* Status when game is in progress - cyan glow */
+.status-progress {
+  background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
+  color: #00d9ff;
+  border: 2px solid #00d9ff;
+  box-shadow: 
+    0 0 15px rgba(0, 217, 255, 0.5),
+    inset 0 0 15px rgba(0, 217, 255, 0.1);
+  text-shadow: 0 0 10px rgba(0, 217, 255, 0.8);
+}
+
+/* Status when someone wins - green glow */
+.status-win {
+  background: linear-gradient(135deg, #0f2027 0%, #203a43 100%);
+  color: #00ff88;
+  border: 2px solid #00ff88;
+  box-shadow: 
+    0 0 20px rgba(0, 255, 136, 0.6),
+    inset 0 0 20px rgba(0, 255, 136, 0.1);
+  text-shadow: 0 0 12px rgba(0, 255, 136, 0.9);
+  animation: celebrate 1s ease-in-out;
+}
+
+/* Celebration animation for wins */
+@keyframes celebrate {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 
+      0 0 30px rgba(0, 255, 136, 0.8),
+      inset 0 0 20px rgba(0, 255, 136, 0.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Status for draw - amber glow */
+.status-draw {
+  background: linear-gradient(135deg, #1a1410 0%, #2d2416 100%);
+  color: #ffaa00;
+  border: 2px solid #ffaa00;
+  box-shadow: 
+    0 0 15px rgba(255, 170, 0, 0.5),
+    inset 0 0 15px rgba(255, 170, 0, 0.1);
+  text-shadow: 0 0 10px rgba(255, 170, 0, 0.8);
+}
+
+.move-counts {
+  /* Layout - two columns */
+  display: flex;
+  justify-content: space-around;
+  gap: 15px;
+  
+  /* Spacing */
+  margin-bottom: 20px;
+}
+
+.player-count {
+  /* Flex properties - equal width */
+  flex: 1;
+  
+  /* Typography */
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: center;
+  
+  /* Spacing */
+  padding: 15px;
+  
+  /* Appearance */
+  border-radius: 6px;
+  background-color: rgba(255, 255, 255, 0.05);
+  
+  /* Transitions */
+  transition: all 0.3s ease;
+}
+
+/* Styling for player X count - cyan */
+.player-x {
+  color: #00d9ff;
+  border: 2px solid #00d9ff;
+  box-shadow: 
+    0 0 10px rgba(0, 217, 255, 0.3),
+    inset 0 0 10px rgba(0, 217, 255, 0.05);
+}
+
+.player-x:hover {
+  box-shadow: 
+    0 0 15px rgba(0, 217, 255, 0.5),
+    inset 0 0 10px rgba(0, 217, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Styling for player O count - magenta */
+.player-o {
+  color: #ff006e;
+  border: 2px solid #ff006e;
+  box-shadow: 
+    0 0 10px rgba(255, 0, 110, 0.3),
+    inset 0 0 10px rgba(255, 0, 110, 0.05);
+}
+
+.player-o:hover {
+  box-shadow: 
+    0 0 15px rgba(255, 0, 110, 0.5),
+    inset 0 0 10px rgba(255, 0, 110, 0.1);
+  transform: translateY(-2px);
+}
+
+.vanish-warning {
+  /* Typography */
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  
+  /* Spacing */
+  padding: 15px;
+  margin-top: 10px;
+  
+  /* Appearance */
+  background: linear-gradient(135deg, #2d0a0f 0%, #4a0e1c 100%);
+  color: #ff4757;
+  border: 2px solid #ff4757;
+  border-radius: 6px;
+  border-left: 5px solid #ff4757;
+  
+  /* Glowing effect */
+  box-shadow: 
+    0 0 15px rgba(255, 71, 87, 0.4),
+    inset 0 0 15px rgba(255, 71, 87, 0.1);
+  
+  /* Animation */
+  animation: pulse-warning-banner 2s infinite;
+}
+
+/* Pulsing animation for warning */
+@keyframes pulse-warning-banner {
+  0% {
+    box-shadow: 
+      0 0 15px rgba(255, 71, 87, 0.4),
+      inset 0 0 15px rgba(255, 71, 87, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 0 25px rgba(255, 71, 87, 0.7),
+      inset 0 0 15px rgba(255, 71, 87, 0.2);
+  }
+  100% {
+    box-shadow: 
+      0 0 15px rgba(255, 71, 87, 0.4),
+      inset 0 0 15px rgba(255, 71, 87, 0.1);
+  }
+}
