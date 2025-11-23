@@ -2,89 +2,121 @@
  * Cell Component Styles - Dark Mode Edition
  * ==========================================
  * 
- * Dark theme with purple/blue accents and neon glow effects.
- * High contrast for accessibility and modern aesthetic.
+ * APPROACH: Keep borders static, use transform scale for "pop out" effect
+ * and outer glow for visual emphasis without affecting layout or borders.
  */
 
+
 .cell {
-  /* Cell dimensions - same as before */
+  /* Cell dimensions */
   width: 100px;
   height: 100px;
+
   /* Center content */
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Typography - larger and bolder for dark mode */
+
+  /* Typography */
   font-size: 3rem;
   font-weight: 900;
   font-family: 'Arial Black', 'Arial Bold', sans-serif;
-  /* Dark background with purple border */
+
+  /* Background and borders - these NEVER change */
   background-color: #1a1625;
   border: 3px solid #6b4fc3;
 
-  /* Cursor style: Become a pointing hand on hover */
+  /* Cursor */
   cursor: pointer;
-  
-  /* Smooth transitions for all state changes */
+
+  /* Smooth transitions for transform and box-shadow */
   transition: all 0.3s ease;
-  
-  /* Add subtle inner shadow for depth */
+
+  /* Base shadow - subtle depth effect */
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+
+  /* Position for z-index stacking */
+  position: relative;
+  z-index: 1;
 }
 
-/* Hover effect for empty cells - glowing purple effect */
+
+/* ============================================
+   HOVER EFFECT - Pop Out with Outer Glow
+   ============================================
+   
+   Strategy: 
+   - Use transform: scale() to make cell "pop out"
+   - Use outer box-shadow to add neon glow
+   - NEVER touch borders - they stay identical
+   
+   Result: Dramatic pop-out effect with consistent borders
+*/
 .cell:hover {
+  /* Lighten background */
   background-color: #2a1f3d;
-  border-color: #8b6edf;
-  box-shadow: 
-    inset 0 0 10px rgba(0, 0, 0, 0.5),
-    0 0 20px rgba(107, 79, 195, 0.6);
+
+  /* CRITICAL: Border stays exactly the same */
+  /* border: 3px solid #6b4fc3; (unchanged) */
+
+  /* Pop-out effect - scales cell up by 5% */
   transform: scale(1.05);
+
+  /* Bring to front so borders are fully visible */
+  z-index: 10;
+
+  /* Layered box-shadow for depth + glow:
+     1. Inner shadow for depth (unchanged)
+     2. Bright outer glow - purple neon effect */
+  box-shadow:
+    inset 0 0 10px rgba(0, 0, 0, 0.5),           /* inner depth */
+    0 0 20px rgba(139, 110, 223, 0.8);           /* outer purple glow */
 }
 
-/* Disable hover effect for occupied cells */
+
+/* Disable hover for occupied cells */
 .cell[data-value="X"]:hover,
 .cell[data-value="O"]:hover {
   cursor: default;
+  
+  /* Remove pop-out effect */
   transform: none;
+  
+  /* Keep original background */
   background-color: #1a1625;
-  border-color: #6b4fc3;
+  
+  /* Reset to base shadow only - no glow */
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-/* Highlight the oldest piece - warning glow effect */
+
+/* Oldest piece indicator - warning state */
 .cell.oldest {
   background-color: #2d1a1f;
-  border-color: #ff4757;
+  border-color: #ff4757;  /* Red border to indicate this piece will vanish */
   animation: pulse-warning 1.5s infinite;
-  box-shadow: 
-    inset 0 0 10px rgba(0, 0, 0, 0.5),
-    0 0 25px rgba(255, 71, 87, 0.8);
+  z-index: 5;  /* Ensure oldest cell border is visible above neighbors */
 }
 
-/* Pulsing animation for oldest piece - warning effect */
+
+/* Pulsing animation for oldest piece - red warning glow */
 @keyframes pulse-warning {
-  0% {
+  0%, 100% {
     box-shadow: 
       inset 0 0 10px rgba(0, 0, 0, 0.5),
-      0 0 15px rgba(255, 71, 87, 0.9);
+      0 0 15px rgba(255, 71, 87, 0.6);
     border-color: #ff4757;
   }
   50% {
     box-shadow: 
       inset 0 0 10px rgba(0, 0, 0, 0.5),
-      0 0 35px rgba(255, 71, 87, 0.6);
+      0 0 25px rgba(255, 71, 87, 0.8);
     border-color: #ff6b7a;
-  }
-  100% {
-    box-shadow: 
-      inset 0 0 10px rgba(0, 0, 0, 0.5),
-      0 0 15px rgba(255, 71, 87, 0.9);
-    border-color: #ff4757;
   }
 }
 
-/* Styling for X pieces - cyan/blue glow */
+
+/* Player X styling - cyan glow */
 .cell[data-value="X"] {
   color: #00d9ff;
   text-shadow: 
@@ -92,7 +124,8 @@
     0 0 20px rgba(0, 217, 255, 0.4);
 }
 
-/* Styling for O pieces - hot pink/magenta glow */
+
+/* Player O styling - pink glow */
 .cell[data-value="O"] {
   color: #ff006e;
   text-shadow: 

@@ -13,17 +13,19 @@ import './Board.css';
 
 /**
  * Board component that renders the 3x3 grid.
- * 
+ *
  * @param {Array<Array<string>>} board - 2D array representing board state
  * @param {function} onCellClick - Handler for cell clicks (row, col). Handled by the parent component (App).
  * @param {Array<number>|null} oldestPieceX - Position of X's oldest piece [row, col]
  * @param {Array<number>|null} oldestPieceO - Position of O's oldest piece [row, col]
+ * @param {Array<Array<number>>|null} winningLine - Array of three [row, col] positions forming the winning line
+ * @param {string} gameState - Current game state (in_progress, x_wins, o_wins, draw)
  */
-const Board = ({ board, onCellClick, oldestPieceX, oldestPieceO }) => {
+const Board = ({ board, onCellClick, oldestPieceX, oldestPieceO, winningLine, gameState }) => {
   
   /**
    * Helper Function to check if a cell position is the oldest piece.
-   * 
+   *
    * @param {number} row - Row index
    * @param {number} col - Column index
    * @returns {boolean} True if this is an oldest piece
@@ -38,6 +40,62 @@ const Board = ({ board, onCellClick, oldestPieceX, oldestPieceO }) => {
       return true;
     }
     return false;
+  };
+
+  /**
+   * Calculate SVG line coordinates for the winning line.
+   * Converts grid positions to pixel coordinates for drawing.
+   *
+   * @returns {Object|null} Object with x1, y1, x2, y2 coordinates or null
+   */
+  const getLineCoordinates = () => {
+    if (!winningLine || winningLine.length !== 3) {
+      return null;
+    }
+
+    // Cell size is 100px (as defined in Cell.css)
+    // Board has 20px padding (as defined in Board.css)
+    const cellSize = 100;
+    const boardPadding = 20;
+    const offset = cellSize / 2; // Center of cell
+
+    // Get start and end positions
+    const start = winningLine[0];
+    const end = winningLine[2];
+
+    // Calculate center coordinates for start and end
+    // Add boardPadding to account for the board's padding
+    let x1 = start[1] * cellSize + offset + boardPadding;
+    let y1 = start[0] * cellSize + offset + boardPadding;
+    let x2 = end[1] * cellSize + offset + boardPadding;
+    let y2 = end[0] * cellSize + offset + boardPadding;
+
+    // Extend the line by 15% on each side (but not to the edge)
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    const extension = 0.15;
+
+    x1 -= dx * extension;
+    y1 -= dy * extension;
+    x2 += dx * extension;
+    y2 += dy * extension;
+
+    return { x1, y1, x2, y2 };
+  };
+
+  const lineCoords = getLineCoordinates();
+
+  /**
+   * Get the color for the victory line based on the winner.
+   * X gets cyan (#00d9ff), O gets pink (#ff006e)
+   */
+  const getLineColor = () => {
+    if (gameState === 'x_wins') {
+      return '#00d9ff'; // Cyan for X
+    } else if (gameState === 'o_wins') {
+      return '#ff006e'; // Pink for O
+    }
+    return '#ffd700'; // Default gold (shouldn't be used)
   };
 
   // Render the 3x3 board grid using Cell components.
@@ -60,6 +118,22 @@ const Board = ({ board, onCellClick, oldestPieceX, oldestPieceO }) => {
           ))}
         </div>
       ))}
+
+      {/* Victory line overlay */}
+      {lineCoords && (
+        <svg className="victory-line-overlay" viewBox="0 0 340 340">
+          <line
+            className="victory-line"
+            x1={lineCoords.x1}
+            y1={lineCoords.y1}
+            x2={lineCoords.x2}
+            y2={lineCoords.y2}
+            stroke={getLineColor()}
+            strokeDasharray="1000"
+            strokeDashoffset="1000"
+          />
+        </svg>
+      )}
     </div>
   );
 };

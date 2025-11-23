@@ -9,23 +9,26 @@
 .board {
   /* Layout - inline-block so it only takes up as much space as needed */
   display: inline-block;
-  
+
+  /* Position relative for absolute positioning of SVG overlay */
+  position: relative;
+
   /* Spacing */
   margin: 20px auto;
   padding: 20px;
-  
+
   /* Dark background with purple tint - gradient for depth */
   background: linear-gradient(135deg, #1a0f2e 0%, #2d1b47 100%);
-  
+
   /* Glowing border effect */
   border: 4px solid #7c4dff;
-  
+
   /* Multiple shadows for depth and glow */
-  box-shadow: 
+  box-shadow:
     0 0 30px rgba(124, 77, 255, 0.6),
     inset 0 0 30px rgba(124, 77, 255, 0.1),
     0 10px 40px rgba(0, 0, 0, 0.8);
-  
+
   /* Rounded corners for modern look */
   border-radius: 12px;
 }
@@ -45,11 +48,59 @@
   border-right: none;
 }
 
+/* Restore all borders on hover to ensure complete border visibility */
+.board-row:not(:last-child) .cell:hover {
+  border-bottom: 3px solid #6b4fc3;
+}
+
+.board-row .cell:not(:last-child):hover {
+  border-right: 3px solid #6b4fc3;
+}
+
+/* Restore all borders for oldest piece indicator */
+.board-row:not(:last-child) .cell.oldest {
+  border-bottom: 3px solid #ff4757;
+}
+
+.board-row .cell:not(:last-child).oldest {
+  border-right: 3px solid #ff4757;
+}
+
 /* Add subtle glow to the entire board on hover */
 .board:hover {
-  box-shadow: 
+  box-shadow:
     0 0 40px rgba(124, 77, 255, 0.8),
     inset 0 0 30px rgba(124, 77, 255, 0.15),
     0 10px 40px rgba(0, 0, 0, 0.8);
   transition: box-shadow 0.3s ease;
+}
+
+/* Victory line overlay */
+.victory-line-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Victory line animation */
+.victory-line {
+  /* Color is set dynamically via stroke attribute in Board.js */
+  stroke-width: 8;
+  stroke-linecap: round;
+  /* Glow effect that adapts to any stroke color */
+  filter: drop-shadow(0 0 12px currentColor) drop-shadow(0 0 6px currentColor);
+  animation: drawLine 0.6s ease-out forwards;
+}
+
+@keyframes drawLine {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
 }

@@ -65,17 +65,7 @@ const GameInfo = ({ currentPlayer, gameState, moveHistoryX, moveHistoryO }) => {
       <div className={`status ${getStatusClass()}`}>
         {getStatusMessage()}
       </div>
-      
-      {/* Display piece counts */}
-      <div className="move-counts">
-        <div className="player-count player-x">
-          Player X: {moveHistoryX.length} {moveHistoryX.length === 1 ? 'piece' : 'pieces'}
-        </div>
-        <div className="player-count player-o">
-          Player O: {moveHistoryO.length} {moveHistoryO.length === 1 ? 'piece' : 'pieces'}
-        </div>
-      </div>
-      
+
       {/* Info about vanishing mechanic */}
       {(moveHistoryX.length >= 3 || moveHistoryO.length >= 3) && (
         <div className="vanish-warning">

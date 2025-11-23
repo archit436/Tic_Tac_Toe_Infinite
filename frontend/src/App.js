@@ -39,7 +39,10 @@ function App() {
   // Oldest piece positions for highlighting
   const [oldestPieceX, setOldestPieceX] = useState(null);
   const [oldestPieceO, setOldestPieceO] = useState(null);
-  
+
+  // Winning line coordinates for victory animation
+  const [winningLine, setWinningLine] = useState(null);
+
   // Loading and error states
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -76,7 +79,7 @@ function App() {
   
   /**
    * Update all game state from backend response.
-   * 
+   *
    * @param {Object} gameData - Game state object from backend
    */
   const updateGameState = (gameData) => {
@@ -88,6 +91,7 @@ function App() {
     setMoveHistoryO(gameData.move_history_o);
     setOldestPieceX(gameData.oldest_piece_x);
     setOldestPieceO(gameData.oldest_piece_o);
+    setWinningLine(gameData.winning_line);
   };
 
   // =========================================================================
@@ -230,6 +234,8 @@ function App() {
             onCellClick={handleCellClick}
             oldestPieceX={oldestPieceX}
             oldestPieceO={oldestPieceO}
+            winningLine={winningLine}
+            gameState={gameState}
           />
         )}
 
