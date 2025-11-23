@@ -48,17 +48,20 @@ class VanishingTicTacToe:
         # Create 3x3 board, initialized with empty cells
         # Board is represented as a 2D list: board[row][col]
         self.board: List[List[str]] = [[Player.EMPTY.value for _ in range(3)] for _ in range(3)]
-        
+
         # Track move history for each player to identify the oldest piece
         # Each entry is a tuple (row, col) representing a move position
         self.move_history_x: List[Tuple[int, int]] = []
         self.move_history_o: List[Tuple[int, int]] = []
-        
+
         # Track whose turn it is (X always starts)
         self.current_player: Player = Player.X
-        
+
         # Track game state
         self.state: GameState = GameState.IN_PROGRESS
+
+        # Track winning line coordinates (for drawing the victory line)
+        self.winning_line: Optional[List[Tuple[int, int]]] = None
 
     # We define several modifier and getter methods to interact with the elements of the class. 
       
@@ -197,38 +200,42 @@ class VanishingTicTacToe:
     def _check_win(self, player: Player) -> bool:
         """
         Check if the specified player has won the game.
-        
+
         Win conditions:
         - 3 in a row horizontally
         - 3 in a row vertically
         - 3 in a row diagonally
-        
+
         Args:
             player: The player to check for a win
-            
+
         Returns:
             True if the player has won, False otherwise
         """
         symbol = player.value
-        
+
         # Check all rows for 3 in a row
         for row in range(3):
             if all(self.board[row][col] == symbol for col in range(3)):
+                self.winning_line = [(row, 0), (row, 1), (row, 2)]
                 return True
-        
+
         # Check all columns for 3 in a row
         for col in range(3):
             if all(self.board[row][col] == symbol for row in range(3)):
+                self.winning_line = [(0, col), (1, col), (2, col)]
                 return True
-        
+
         # Check top-left to bottom-right diagonal
         if all(self.board[i][i] == symbol for i in range(3)):
+            self.winning_line = [(0, 0), (1, 1), (2, 2)]
             return True
-        
+
         # Check top-right to bottom-left diagonal
         if all(self.board[i][2-i] == symbol for i in range(3)):
+            self.winning_line = [(0, 2), (1, 1), (2, 0)]
             return True
-        
+
         return False
     
     def _check_draw(self) -> bool:
@@ -264,6 +271,7 @@ class VanishingTicTacToe:
         self.move_history_o = []
         self.current_player = Player.X
         self.state = GameState.IN_PROGRESS
+        self.winning_line = None
     
     def get_oldest_piece_position(self, player: Player) -> Optional[Tuple[int, int]]:
         """

@@ -1,0 +1,22 @@
+### Backend ###
+-> The backend was designed in two layers, one file to contain a set of functions to define 
+the game logic, and another file to create a FastAPI backend that contains REST API endpoints that 
+can be triggered by a client through HTTP requests.
+-> REST APIs are a style of designing APIs to avoid issues. The main thing is to using GET, POST, PUT 
+and DELETE HTTP methods and using unique URLs for each API.
+-> FastAPI is a python framework for defining these API. Alternatives include Flask, Django REST
+Framework, Express, Spring Boot.
+-> The responses of each of the API functions was standaridised in JSON format using pydantic models.
+-> We set up a CORS middleware to set up restrictions on who can reach these endpoints.
+-> In production, this would be hosted in an EC2 instance that is alive all the time.
+-> In local deployment, it has to be started every time using uvicorn main:app --reload --port 8000.
+
+### Frontend ###
+-> The frontend needs to also be compiled and deployed on a local web server using npm start (on port 3000)
+-> In production, this would happend using an AWS S3 instance.
+-> The frontend is set up to make calls to the backend - these are defined in a seperate api JS file.
+-> The components to be rendered are set up in a component hierarchial setup of App->Board->Cell with
+seperate JS and CSS files for all of them.
+-> Index.html brings it together - this is the file the web browser looks for.
+
+

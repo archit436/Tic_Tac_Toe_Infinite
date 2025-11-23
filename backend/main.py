@@ -56,7 +56,7 @@ class GameResponse(BaseModel):
     """
     Response model that returns the current game state.
     Sent after moves or when fetching state.
-    
+
     Attributes:
         game_id: Unique identifier for this game session
         board: 2D array representing the current board state
@@ -66,6 +66,7 @@ class GameResponse(BaseModel):
         move_history_o: List of positions where player O has pieces
         oldest_piece_x: Position of X's oldest piece (will vanish next if X places a 4th piece)
         oldest_piece_o: Position of O's oldest piece (will vanish next if O places a 4th piece)
+        winning_line: Coordinates of the winning line [[row, col], [row, col], [row, col]] or None
     """
     game_id: str
     board: list
@@ -75,6 +76,7 @@ class GameResponse(BaseModel):
     move_history_o: list
     oldest_piece_x: Optional[list]  # [row, col] or None
     oldest_piece_o: Optional[list]  # [row, col] or None
+    winning_line: Optional[list]  # [[row, col], [row, col], [row, col]] or None
 
 
 class GameListResponse(BaseModel):
@@ -127,24 +129,29 @@ games: Dict[str, VanishingTicTacToe] = {}
 def _build_game_response(game_id: str, game: VanishingTicTacToe) -> GameResponse:
     """
     Helper function to convert a game instance into a JSON-serializable GameResponse.
-    
+
     This standardizes the format of game state sent to the frontend.
-    
+
     Args:
         game_id: The unique identifier for this game
         game: The VanishingTicTacToe game instance
-        
+
     Returns:
         GameResponse object ready to be serialized to JSON
     """
     # Get oldest piece positions for display purposes (UI can highlight them)
     oldest_x = game.get_oldest_piece_position(Player.X)
     oldest_o = game.get_oldest_piece_position(Player.O)
-    
+
     # Convert tuples to lists for JSON serialization
     oldest_x_list = [oldest_x[0], oldest_x[1]] if oldest_x else None
     oldest_o_list = [oldest_o[0], oldest_o[1]] if oldest_o else None
-    
+
+    # Convert winning line to list of lists for JSON serialization
+    winning_line_list = None
+    if game.winning_line:
+        winning_line_list = [[pos[0], pos[1]] for pos in game.winning_line]
+
     return GameResponse(
         game_id=game_id,
         board=game.get_board(),
@@ -154,6 +161,7 @@ def _build_game_response(game_id: str, game: VanishingTicTacToe) -> GameResponse
         move_history_o=game.get_move_history(Player.O),
         oldest_piece_x=oldest_x_list,
         oldest_piece_o=oldest_o_list,
+        winning_line=winning_line_list,
     )
 
 
